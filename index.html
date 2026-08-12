@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Regina Su | 資料分析履歷</title>
+    <style>
+      :root {
+        --bg: #f7f4ef;
+        --panel: rgba(255, 255, 255, 0.78);
+        --panel-strong: #ffffff;
+        --primary: #b7774d;
+        --primary-deep: #8b4d2a;
+        --accent: #e8d8c4;
+        --text: #2e2630;
+        --muted: #5d5360;
+        --line: rgba(92, 78, 86, 0.15);
+        --success: #5d8f7d;
+        --shadow: 0 20px 45px rgba(62, 34, 16, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "Microsoft JhengHei", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(233, 202, 177, 0.35), transparent 30%),
+          radial-gradient(circle at bottom right, rgba(121, 160, 150, 0.15), transparent 28%),
+          var(--bg);
+        color: var(--text);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .page-shell {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px 20px 60px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 24px;
+        margin-bottom: 30px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.52);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 10px 30px rgba(80, 53, 43, 0.04);
+      }
+
+      .brand {
+        font-size: 1.1rem;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+      }
+
+      .nav {
+        display: flex;
+        gap: 22px;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      .nav a {
+        position: relative;
+      }
+
+      .nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 2px;
+        background: var(--primary);
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.25s ease;
+      }
+
+      .nav a:hover::after,
+      .nav a:focus-visible::after {
+        transform: scaleX(1);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.35fr 0.85fr;
+        gap: 26px;
+        align-items: center;
+        padding: 28px 28px 18px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.82), rgba(242,229,214,0.7));
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+      }
+
+      .tag {
+        display: inline-block;
+        margin: 0 0 18px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(183, 119, 77, 0.12);
+        color: var(--primary-deep);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2.3rem, 4vw, 4rem);
+        line-height: 1.1;
+        letter-spacing: 0.02em;
+      }
+
+      .hero-copy p.description {
+        margin: 18px 0 26px;
+        color: var(--muted);
+        font-size: 1.04rem;
+        line-height: 1.9;
+        max-width: 620px;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 26px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 24px;
+        border-radius: 999px;
+        font-weight: 700;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .button.primary {
+        background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+        color: #fff;
+        box-shadow: 0 16px 30px rgba(139, 77, 42, 0.2);
+      }
+
+      .button.secondary {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid var(--line);
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .stat-box {
+        padding: 18px 16px 14px;
+        background: rgba(255,255,255,0.55);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+      }
+
+      .stat-box strong {
+        display: block;
+        font-size: 1.7rem;
+        margin-bottom: 8px;
+        color: var(--primary-deep);
+      }
+
+      .stat-box span {
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+      }
+
+      .hero-card {
+        padding: 22px 20px 16px;
+        background: rgba(255,255,255,0.72);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+      }
+
+      .mini-card {
+        padding: 18px 18px 14px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(183,119,77,0.1), rgba(121,160,150,0.16));
+        border: 1px solid rgba(183,119,77,0.12);
+      }
+
+      .mini-card h3 {
+        margin: 0 0 10px;
+        font-size: 1rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--primary-deep);
+      }
+
+      .mini-card ul {
+        margin: 0;
+        padding-left: 1.2rem;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 18px 0 14px;
+      }
+
+      .skill-tags span {
+        padding: 8px 12px;
+        background: rgba(121,160,150,0.12);
+        border: 1px solid rgba(121,160,150,0.15);
+        border-radius: 999px;
+        color: var(--text);
+        font-size: 0.78rem;
+        font-weight: 600;
+      }
+
+      .chart-box {
+        margin-top: 18px;
+        padding: 18px 14px 8px;
+        background: rgba(244,237,230,0.8);
+        border-radius: 18px;
+        border: 1px solid rgba(92,78,86,0.08);
+      }
+
+      .bar {
+        display: grid;
+        grid-template-columns: 90px 1fr 42px;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      .bar-track {
+        position: relative;
+        height: 10px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: rgba(33, 28, 30, 0.08);
+      }
+
+      .bar-fill {
+        position: absolute;
+        inset: 0 auto 0 0;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--primary), #d09b73);
+      }
+
+      .panel {
+        margin-top: 28px;
+        padding: 28px 26px;
+        background: rgba(255,255,255,0.65);
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        box-shadow: 0 14px 35px rgba(59, 42, 32, 0.04);
+      }
+
+      .section-header {
+        margin-bottom: 22px;
+      }
+
+      .section-header h2 {
+        margin: 0 0 8px;
+        font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+      }
+
+      .section-header p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .info-box {
+        padding: 20px 18px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(245,236,228,0.7));
+        border: 1px solid var(--line);
+      }
+
+      .info-box h3 {
+        margin: 0 0 10px;
+        color: var(--primary-deep);
+        font-size: 1rem;
+      }
+
+      .info-box p {
+        margin: 0;
+        line-height: 1.8;
+        color: var(--muted);
+      }
+
+      .skill-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .skill-card {
+        padding: 18px 16px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(247,242,237,0.82));
+      }
+
+      .skill-card .icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        font-size: 1.5rem;
+        background: rgba(183,119,77,0.12);
+        color: var(--primary-deep);
+        margin-bottom: 14px;
+      }
+
+      .skill-card h3 {
+        margin: 0 0 10px;
+        font-size: 1.15rem;
+      }
+
+      .skill-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .capability-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+      }
+
+      .progress-list {
+        display: grid;
+        gap: 16px;
+      }
+
+      .progress-item {
+        padding: 14px 16px 12px;
+        border-radius: 16px;
+        background: rgba(255,255,255,0.74);
+        border: 1px solid var(--line);
+      }
+
+      .progress-head {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      .progress-track {
+        position: relative;
+        height: 12px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: rgba(37, 25, 20, 0.06);
+      }
+
+      .progress-fill {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--success), #7bb0a1);
+      }
+
+      .timeline {
+        display: grid;
+        gap: 16px;
+      }
+
+      .timeline-item {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 20px;
+        padding: 20px 18px;
+        background: rgba(255,255,255,0.78);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+      }
+
+      .year {
+        font-size: 0.9rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        color: var(--primary-deep);
+        padding-top: 2px;
+      }
+
+      .timeline-item h3 {
+        margin: 0 0 6px;
+        font-size: 1.2rem;
+      }
+
+      .timeline-item .meta {
+        margin-bottom: 10px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .timeline-item ul {
+        margin: 0;
+        padding-left: 1.2rem;
+        color: var(--muted);
+        line-height: 1.9;
+      }
+
+      .projects {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .project-card {
+        padding: 18px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(244,236,229,0.8));
+      }
+
+      .project-card h3 {
+        margin: 0 0 10px;
+        font-size: 1.1rem;
+      }
+
+      .project-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .project-card .highlight {
+        display: inline-block;
+        margin-top: 14px;
+        font-weight: 700;
+        color: var(--primary-deep);
+      }
+
+      footer {
+        text-align: center;
+        padding: 28px 0 8px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        letter-spacing: 0.04em;
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .about-grid,
+        .skill-grid,
+        .projects,
+        .capability-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .nav {
+          display: none;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .page-shell {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+
+        .topbar,
+        .hero,
+        .panel {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .stats {
+          grid-template-columns: 1fr;
+        }
+
+        .timeline-item {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand">REGINA SU</div>
+        <nav class="nav" aria-label="主選單">
+          <a href="#about">關於我</a>
+          <a href="#skills">技能</a>
+          <a href="#experience">經歷</a>
+          <a href="#projects">專案</a>
+          <a href="#contact">聯絡</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="tag">DATA ANALYSIS • DIGITAL MARKETING</p>
+            <h1>數據驅動，讓品牌更有說服力</h1>
+            <p class="description">
+              我是一位兼具行銷實務與資料分析能力的履歷型人才，擅長將流量數據、消費者行為與轉換率分析轉化為具體的品牌策略與營運建議。
+              從電商營運、社群經營到數據洞察，我持續強化自身在資料分析領域的應用與決策能力。
+            </p>
+            <div class="buttons">
+              <a class="button primary" href="#skills">查看技能</a>
+              <a class="button secondary" href="#experience">工作經歷</a>
+            </div>
+
+            <div class="stats">
+              <div class="stat-box">
+                <strong>5+</strong>
+                <span>年數位行銷與電商經驗</span>
+              </div>
+              <div class="stat-box">
+                <strong>10+</strong>
+                <span>個品牌與通路專案執行</span>
+              </div>
+              <div class="stat-box">
+                <strong>90%</strong>
+                <span>提升關鍵指標與轉換優化</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-card" aria-label="資料分析技能概覽">
+            <div class="mini-card">
+              <h3>新增技能：資料分析</h3>
+              <ul>
+                <li>Google Analytics / GA4 設定與報表分析</li>
+                <li>Excel、SQL 與 Power BI 儀表板整合</li>
+                <li>流量來源與轉換漏斗優化分析</li>
+                <li>消費者行為與商品表現洞察</li>
+              </ul>
+            </div>
+
+            <div class="skill-tags">
+              <span>SQL</span>
+              <span>Excel</span>
+              <span>Power BI</span>
+              <span>Python</span>
+              <span>GA4</span>
+              <span>Dashboard</span>
+            </div>
+
+            <div class="chart-box">
+              <div class="bar">
+                <span>Google Analytics</span>
+                <div class="bar-track"><div class="bar-fill" style="width: 90%;"></div></div>
+                <strong>90%</strong>
+              </div>
+              <div class="bar">
+                <span>Excel</span>
+                <div class="bar-track"><div class="bar-fill" style="width: 92%;"></div></div>
+                <strong>92%</strong>
+              </div>
+              <div class="bar">
+                <span>Power BI</span>
+                <div class="bar-track"><div class="bar-fill" style="width: 84%;"></div></div>
+                <strong>84%</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="about" class="panel">
+          <div class="section-header">
+            <h2>關於我</h2>
+            <p>結合行銷策略、品牌設計與數據分析，專注於將資訊轉化為具體商業行動與成效成果。</p>
+          </div>
+          <div class="about-grid">
+            <div class="info-box">
+              <h3>市場洞察</h3>
+              <p>從使用者行為、流量來源和轉換路徑中找出品牌成長機會，協助調整內容與通路策略。</p>
+            </div>
+            <div class="info-box">
+              <h3>數據判斷</h3>
+              <p>善於使用圖表、漏斗與關鍵指標分析，結合營運實務提供更清楚的決策依據。</p>
+            </div>
+            <div class="info-box">
+              <h3>跨域整合</h3>
+              <p>將行銷、設計與數據分析串聯，實作品牌曝光、會員增長與轉換優化的整體方案。</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="skills" class="panel">
+          <div class="section-header">
+            <h2>專業技能</h2>
+            <p>依照實務經驗與數據分析需求，建立具備行銷洞察、資料處理與決策支援能力的技能組合。</p>
+          </div>
+
+          <div class="skill-grid">
+            <article class="skill-card">
+              <div class="icon">📊</div>
+              <h3>資料分析</h3>
+              <p>懂得將數據轉化為行動建議，涵蓋數據清理、趨勢觀察、轉換分析與 KPI 儀表板呈現。</p>
+            </article>
+            <article class="skill-card">
+              <div class="icon">📈</div>
+              <h3>行銷優化</h3>
+              <p>分析廣告成效、社群互動與轉換率，精準優化內容與投放方向，強化品牌曝光效率。</p>
+            </article>
+            <article class="skill-card">
+              <div class="icon">🧮</div>
+              <h3>Excel / SQL</h3>
+              <p>熟悉資料彙整、關鍵字分析、報表製作與查詢邏輯，支援日常營運與決策分析。</p>
+            </article>
+            <article class="skill-card">
+              <div class="icon">📉</div>
+              <h3>Power BI</h3>
+              <p>能建立看板與視覺化報表，讓管理者快速理解數據趨勢與營運狀況。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-header">
+            <h2>資料分析能力</h2>
+            <p>以實務經驗為依據，涵蓋數據蒐集、報表建置、洞察分析與優化執行的完整流程。</p>
+          </div>
+
+          <div class="capability-grid">
+            <div class="progress-list">
+              <div class="progress-item">
+                <div class="progress-head"><span>Google Analytics</span><span>90%</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-head"><span>Excel 數據處理</span><span>92%</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width: 92%;"></div></div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-head"><span>Power BI 儀表板</span><span>84%</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width: 84%;"></div></div>
+              </div>
+            </div>
+
+            <div class="progress-list">
+              <div class="progress-item">
+                <div class="progress-head"><span>SQL 查詢</span><span>80%</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width: 80%;"></div></div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-head"><span>Python / 資料分析</span><span>76%</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width: 76%;"></div></div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-head"><span>AB 測試與優化</span><span>88%</span></div>
+                <div class="progress-track"><div class="progress-fill" style="width: 88%;"></div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="experience" class="panel">
+          <div class="section-header">
+            <h2>工作經歷</h2>
+            <p>從內容與品牌設計出發，逐步累積數位行銷與數據洞察的實務能力。</p>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="year">2022 - 2024</div>
+              <div>
+                <h3>電商品牌營運顧問</h3>
+                <div class="meta">全通路電商品牌｜商品企劃、數據分析、行銷執行</div>
+                <ul>
+                  <li>分析各通路流量、轉換率與商品表現，優化商品上架與行銷策略。</li>
+                  <li>整合 Google Ads、社群與購物平台數據，提升關鍵轉換指標與廣告投資效率。</li>
+                  <li>協助品牌內容與商品敘述優化，提升頁面轉換與會員留存。</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="year">2019 - 2022</div>
+              <div>
+                <h3>數位行銷與內容企劃</h3>
+                <div class="meta">綜合型網路電商品牌｜社群經營、文案策展、品牌曝光</div>
+                <ul>
+                  <li>執行社群與電商平台的數據監控與內容分析，制定內容發布節奏與主題策略。</li>
+                  <li>對接商品攝影、文案與頁面優化，提升品牌曝光與購買轉換。</li>
+                  <li>運用數據報表追蹤活動成效，支援跨部門決策與行銷資源調配。</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="year">2014 - 2019</div>
+              <div>
+                <h3>品牌行銷與網路企劃</h3>
+                <div class="meta">跨境電商與零售品牌｜品牌視覺、行銷執行、店鋪營運</div>
+                <ul>
+                  <li>負責品牌視覺規劃與數位內容設計，統整線上品牌形象與電商曝光。</li>
+                  <li>利用數據分析評估廣告與關鍵字投放成效，降低低效流量浪費。</li>
+                  <li>協助產品與活動企劃流程，提升會員參與與品牌忠誠度。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" class="panel">
+          <div class="section-header">
+            <h2>專案成效</h2>
+            <p>以數據為基礎的優化思維，帶動品牌成長與使用者轉換。</p>
+          </div>
+
+          <div class="projects">
+            <article class="project-card">
+              <h3>電商商品轉換優化</h3>
+              <p>分析商品頁點擊、停留與購買路徑，優化文案與版位安排，使關鍵商品轉換率提升近 30%。</p>
+              <span class="highlight">提升轉換率 30%</span>
+            </article>
+            <article class="project-card">
+              <h3>社群內容效益分析</h3>
+              <p>整理各主題貼文互動情況，找出高轉換內容型態與發布節奏，協助後續內容投放更有效率。</p>
+              <span class="highlight">提升互動率 25%</span>
+            </article>
+            <article class="project-card">
+              <h3>廣告投放策略優化</h3>
+              <p>透過流量來源與效果分析，重整關鍵字與廣告素材，降低低效支出並提高投資報酬率。</p>
+              <span class="highlight">降低成本 20%</span>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer id="contact">
+        © 2026 Regina Su • Data Analysis & Digital Marketing Resume
+      </footer>
+    </div>
+  </body>
+</html>
